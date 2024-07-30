@@ -1,10 +1,10 @@
-import { SearchTextField } from '../../../components/MuiUI/TextFields.styled/SearchTextField.styled';
+import { SearchTextField } from '../MuiUI/TextFields.styled/SearchTextField.styled';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import UserSenderAvatar from '/testSenderUserAvatar.png';
 
-import { WHITE_COLOR } from '../../../variables/variables';
+import { WHITE_COLOR } from '../../variables/variables';
 
 interface IChatInfo {
   test: boolean;

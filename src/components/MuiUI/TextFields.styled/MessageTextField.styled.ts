@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { TextField } from '@mui/material'
 import { ERROR_COLOR, MAIN_SECONDARY_YELLOW_COLOR, MAIN_PRIMARY_YELLOW_COLOR, WHITE_COLOR } from '../../../variables/variables'
 
-export const MassageTextField = styled(TextField)({
+export const MessageTextField = styled(TextField)({
     '&.MuiTextField-root': {
         width: '100%',
         transition: '0.2s linear',

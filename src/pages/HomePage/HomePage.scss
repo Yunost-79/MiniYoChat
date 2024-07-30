@@ -76,7 +76,7 @@
 
       .chats_info {
         flex: 1 1 20%;
-        padding: 20px 0 20px 20px;
+        padding: 0 0 20px 20px;
         border-right: 3px solid $MAIN_SECONDARY_YELLOW_COLOR;
 
         display: flex;
@@ -150,7 +150,7 @@
 
       .message_info {
         flex: 1 1 70%;
-        padding: 20px;
+        padding: 0 20px 20px;
         background-color: $MAIN_LIGHT_SAGE_COLOR;
         border-radius: 0 0 15px 15px;
 
@@ -200,7 +200,7 @@
               border-width: 15px 15px 0 0;
               border-color: $MAIN_DARK_SAGE_COLOR transparent transparent transparent;
             }
-            .sender_massage_info {
+            .sender_Message_info {
               display: flex;
               align-items: center;
               gap: 10px;
@@ -215,7 +215,7 @@
               }
             }
 
-            .massage_images {
+            .Message_images {
               img {
                 width: 100%;
                 height: 500px;
@@ -229,14 +229,19 @@
 
                 // width: 100vw;
                 // height: 100vh;
-                .close_button {
+                & .close_button {
                   position: absolute;
                   top: 25px;
                   right: 25px;
                   width: 45px;
                   height: 45px;
-                  color: $MAIN_SECONDARY_GREY_COLOR;
+                  color: $MAIN_PRIMAL_GREY_COLOR;
                   cursor: pointer;
+                  transition: linear 0.1s;
+
+                  &.isHover {
+                    color: $MAIN_SECONDARY_GREY_COLOR;
+                  }
                 }
                 img {
                   width: 100%;
@@ -272,6 +277,7 @@
           align-items: center;
           justify-content: space-between;
           gap: 10px;
+          padding-top: 10px;
 
           .message_input {
             flex-grow: 1;
