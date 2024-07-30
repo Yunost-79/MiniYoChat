@@ -1,0 +1,331 @@
+@import '../../main.scss';
+
+.home_page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  max-height: 100vh;
+  color: $WHITE_COLOR;
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    height: 90vh;
+    padding: 50px 0;
+
+    .header {
+      display: flex;
+
+      .user_info {
+        flex: 1 1 20%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $MAIN_DARK_SAGE_COLOR;
+        border-radius: 15px 0 0 0;
+        padding: 20px;
+        border-right: 3px solid $MAIN_SECONDARY_YELLOW_COLOR;
+
+        @media (max-width: 1440px) {
+          flex: 1 1 30%;
+        }
+
+        .user {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+
+          .user_icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+          }
+          .user_title {
+            font-size: 20px;
+            font-weight: 500;
+          }
+        }
+        .user_settings {
+          cursor: pointer;
+        }
+      }
+
+      .message_user_info {
+        flex: 1 1 70%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $MAIN_SECONDARY_SAGE_COLOR;
+        border-radius: 0 15px 0 0;
+        padding: 20px;
+        .message_user_title {
+          font-size: 20px;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .container {
+      display: flex;
+      background-color: $MAIN_PRIMAL_SAGE_COLOR;
+      border-radius: 0 0 15px 15px;
+      height: 100%;
+
+      .chats_info {
+        flex: 1 1 20%;
+        padding: 20px 0 20px 20px;
+        border-right: 3px solid $MAIN_SECONDARY_YELLOW_COLOR;
+
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        @media (max-width: 1440px) {
+          flex: 1 1 30%;
+        }
+
+        .search {
+          padding-right: 10px;
+          .input {
+            width: 100%;
+          }
+        }
+
+        .chat_list {
+          display: flex;
+          flex-direction: column;
+          overflow: scroll;
+
+          .list_item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 5px;
+            transition: ease-out 0.3s;
+            cursor: pointer;
+
+            .user_icon {
+              width: 46px;
+              height: 46px;
+              border-radius: 50%;
+            }
+
+            &:hover {
+              background-color: $MAIN_SECONDARY_YELLOW_COLOR;
+              color: $MAIN_PRIMAL_SAGE_COLOR;
+
+              .message_user_info {
+                .last_message {
+                  color: $MAIN_SECONDARY_SAGE_COLOR;
+                  transition: ease-out 0.3s;
+                }
+              }
+            }
+
+            .message_user_icon {
+              width: 36px;
+              height: 36px;
+            }
+
+            .message_user_info {
+              display: flex;
+              flex-direction: column;
+
+              .username {
+                font-size: 16px;
+                font-weight: 500;
+              }
+
+              .last_message {
+                font-size: 14px;
+                color: $MAIN_SECONDARY_GREY_COLOR;
+              }
+            }
+          }
+        }
+      }
+
+      .message_info {
+        flex: 1 1 70%;
+        padding: 20px;
+        background-color: $MAIN_LIGHT_SAGE_COLOR;
+        border-radius: 0 0 15px 15px;
+
+        .message_list {
+          height: 90%;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 40px;
+          overflow: scroll;
+
+          .message_item {
+            position: relative;
+            width: 70%;
+
+            background-color: $MAIN_DARK_SAGE_COLOR;
+            border-radius: 10px;
+            padding: 10px;
+
+            &.own {
+              background-color: $MAIN_SECONDARY_YELLOW_COLOR;
+              color: $BLACK_COLOR;
+
+              align-self: flex-end;
+
+              &::after {
+                right: 10px;
+                transform: rotate(90deg);
+                border-color: $MAIN_SECONDARY_YELLOW_COLOR transparent transparent transparent;
+              }
+              .message_timestamp {
+                opacity: 0;
+                color: $MAIN_DARK_SAGE_COLOR;
+
+                &.isHover {
+                  opacity: 1;
+                }
+              }
+            }
+
+            &::after {
+              position: absolute;
+              content: '';
+              bottom: -15px;
+
+              border-style: solid;
+              border-width: 15px 15px 0 0;
+              border-color: $MAIN_DARK_SAGE_COLOR transparent transparent transparent;
+            }
+            .sender_massage_info {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+
+              .sender_icon {
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+              }
+              .sender_username {
+                font-size: 18px;
+              }
+            }
+
+            .massage_images {
+              img {
+                width: 100%;
+                height: 500px;
+                border-radius: 10px;
+                object-fit: cover;
+                cursor: pointer;
+              }
+
+              .fullscreen-enabled {
+                position: relative;
+
+                // width: 100vw;
+                // height: 100vh;
+                .close_button {
+                  position: absolute;
+                  top: 25px;
+                  right: 25px;
+                  width: 45px;
+                  height: 45px;
+                  color: $MAIN_SECONDARY_GREY_COLOR;
+                  cursor: pointer;
+                }
+                img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: contain;
+                  cursor: auto;
+                }
+              }
+            }
+            .message_text {
+              width: 95%;
+              margin: 5px;
+            }
+
+            .message_timestamp {
+              position: absolute;
+              right: 7px;
+              bottom: 3px;
+              font-size: 14px;
+              transition: linear 0.1s;
+              opacity: 0;
+              color: $MAIN_SECONDARY_GREY_COLOR;
+
+              &.isHover {
+                opacity: 1;
+              }
+            }
+          }
+        }
+
+        .message_sender {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
+
+          .message_input {
+            flex-grow: 1;
+            width: 100%;
+          }
+
+          .message_items {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+
+            .icon_item {
+              transition: linear 0.3s;
+
+              cursor: pointer;
+            }
+
+            .picker {
+              position: absolute;
+              bottom: 50px;
+              right: 5px;
+
+              &::after {
+                position: absolute;
+                content: '';
+                bottom: -13px;
+                right: 10px;
+
+                border-style: solid;
+                border-width: 15px 15px 0 0;
+                transform: rotate(90deg);
+                border-color: $SECONDARY_BLACK_COLOR transparent transparent transparent;
+              }
+            }
+          }
+
+          .send_item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: $MAIN_INVISIBILITY_YELLOW_COLOR;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: linear 0.3s;
+
+            &:hover {
+              background-color: $MAIN_VISIBILITY_YELLOW_COLOR;
+            }
+          }
+        }
+      }
+    }
+  }
+}
