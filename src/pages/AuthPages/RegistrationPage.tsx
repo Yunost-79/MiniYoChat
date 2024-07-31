@@ -1,7 +1,13 @@
 import { useRef, useState } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import { useRegistration } from '../../lib/firebase/hooks/useRegistration';
+import { ICreateUserParams } from '../../lib/firebase/hooks/useRegistration.types';
 
 import { AuthTextField } from '../../components/MuiUI/TextFields.styled/AuthTextField.styled';
 import { AuthButton } from '../../components/MuiUI/Button.styled/AuthButton.styled';
+import AuthLoading from '../../components/UI/AuthLoading/AuthLoading';
 
 import { InputAdornment, Link } from '@mui/material';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
@@ -9,9 +15,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import { ERROR_COLOR, MAIN_PRIMAL_SAGE_COLOR } from '../../variables/variables';
-import { ERegistrationPage } from './authPage.types';
-import { ICreateUserParams } from '../../lib/firebase/hooks/useRegistration.types';
-import { useRegistration } from '../../lib/firebase/hooks/useRegistration';
 
 const RegistrationPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -21,6 +24,32 @@ const RegistrationPage = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const { createUserOnFirestore, loading, error } = useRegistration();
+
+  const validationSchema = Yup.object({
+    username: Yup.string().required('Username is required'),
+    email: Yup.string().email('Invalid email format').required('Email is required'),
+    password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      email: '',
+      password: '',
+    },
+    validationSchema,
+    onSubmit: (values) => {
+      const userInfo: ICreateUserParams = {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+        file: selectedFile,
+        date: new Date().getTime(),
+      };
+
+      createUserOnFirestore(userInfo, '/');
+    },
+  });
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -42,52 +71,53 @@ const RegistrationPage = () => {
       fileInputRef.current.click();
     }
   };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const target = e.target as HTMLFormElement;
-
-    const formData = {
-      date: new Date().getTime(),
-      username: (target[0] as HTMLInputElement).value,
-      email: (target[1] as HTMLInputElement).value,
-      password: (target[2] as HTMLInputElement).value,
-    };
-
-    if (formData.username !== '' && formData.email !== '' && formData.password !== '') {
-      const userInfo: ICreateUserParams = {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-        file: selectedFile,
-        date: formData.date,
-      };
-
-      createUserOnFirestore(userInfo, '/');
-    }
-  };
-
   return (
     <div className="auth_page">
       <div className="wrapper">
         {loading ? (
-          <span>Loading...</span>
+          <AuthLoading />
         ) : (
           <>
             <div className="auth_title">
               <h1 className="title_name">Mini Yo Chat</h1>
               <span className="title_subtitle">Registration</span>
             </div>
-            <form className="auth_form" onSubmit={handleSubmit}>
-              <AuthTextField className="from_input input_email" name={ERegistrationPage.username} type="text" label="Username" variant="standard" />
-              <AuthTextField className="from_input input_email" name={ERegistrationPage.email} type="text" label="E-mail" variant="standard" />
+            <form className="auth_form" onSubmit={formik.handleSubmit}>
+              <AuthTextField
+                className="from_input input_email"
+                name="username"
+                type="text"
+                label="Username"
+                variant="standard"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.username && Boolean(formik.errors.username)}
+                helperText={formik.touched.username && formik.errors.username}
+              />
+              <AuthTextField
+                className="from_input input_email"
+                name="email"
+                type="text"
+                label="E-mail"
+                variant="standard"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+              />
               <AuthTextField
                 className="from_input input_password"
-                name={ERegistrationPage.password}
+                name="password"
                 type={showPassword ? 'text' : 'password'}
                 label="Password"
                 variant="standard"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && formik.errors.password}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="start" className="auth_show" onClick={handleShowPassword}>
@@ -120,7 +150,7 @@ const RegistrationPage = () => {
               {error && <span style={{ color: ERROR_COLOR }}>Something went wrong!</span>}
             </form>
             <div className="auth_change">
-              <span className="change_text">Do you have account a Mini Yo Chat?</span>
+              <span className="change_text">Do you have an account at Mini Yo Chat?</span>
               <div className="change_subtext">
                 <Link className="subtext_link" href="/login">
                   Sign in
