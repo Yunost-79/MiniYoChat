@@ -5,10 +5,17 @@ import { MAIN_PRIMARY_YELLOW_COLOR, WHITE_COLOR } from '../../variables/variable
 
 import UserAvatar from '/testUserAvatar.png';
 import { useState } from 'react';
+import { useAuth } from '../../zustand/useAuth';
 
 const UserInfo = () => {
-  // const { } = props;
   const [openSetting, setOpenSetting] = useState<boolean>(false);
+  const { isAuth, setIsAuth } = useAuth();
+
+  const handleLogout = () => {
+    setIsAuth(false);
+  };
+
+  console.log(isAuth);
 
   const toggleOpenSetting = () => {
     setOpenSetting(!openSetting);
@@ -20,7 +27,7 @@ const UserInfo = () => {
 
         <h2 className="user_title">Mr Dude</h2>
       </div>
-      <div className="user_settings" onMouseEnter={toggleOpenSetting} onMouseLeave={toggleOpenSetting}>
+      <div className="user_settings" onMouseEnter={toggleOpenSetting} onMouseLeave={toggleOpenSetting} onClick={handleLogout}>
         <ExitToAppIcon style={{ color: openSetting ? MAIN_PRIMARY_YELLOW_COLOR : WHITE_COLOR }} />
       </div>
     </div>
