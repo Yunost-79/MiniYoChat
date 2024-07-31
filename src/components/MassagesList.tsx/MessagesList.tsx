@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { EisHover } from '../../pages/HomePage/homePage.type';
 
@@ -26,19 +26,19 @@ const MessagesList = (props: IMessagesList) => {
     [EisHover.close]: false,
   });
 
-  const handleMouseEnter = useCallback(() => {
+  const handleMouseEnter = () => {
     (icon: EisHover, MessageId: string | null = null) => {
       setIsHover((prev) => ({ ...prev, [icon]: true }));
       setHoverMessageId(MessageId);
     };
-  }, []);
+  };
 
-  const handleMouseLeave = useCallback(() => {
+  const handleMouseLeave = () => {
     (icon: EisHover) => {
       setIsHover((prev) => ({ ...prev, [icon]: false }));
       setHoverMessageId(null);
     };
-  }, []);
+  };
 
   useEffect(() => {
     if (MessageListRef.current) {

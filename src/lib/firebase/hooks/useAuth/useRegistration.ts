@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { doc, setDoc } from 'firebase/firestore';
-import { auth, db, storage } from '../firebase';
 
-import { EAuthFirebase, ICreateUserParams } from './useAuth.types';
+import { EFirebase, ICreateUserParams } from './useAuth.types';
+import { auth, db, storage } from '../../firebase';
 
 export const useRegistration = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -33,14 +33,14 @@ export const useRegistration = () => {
           photoURL: downloadURL,
         });
 
-        await setDoc(doc(db, EAuthFirebase.users, res.user.uid), {
+        await setDoc(doc(db, EFirebase.users, res.user.uid), {
           uid: res.user.uid,
           displayName: username,
           email,
           photoURL: downloadURL,
         });
 
-        await setDoc(doc(db, EAuthFirebase.userChats, res.user.uid), {});
+        await setDoc(doc(db, EFirebase.userChats, res.user.uid), {});
 
         if (path) {
           navigate(path);

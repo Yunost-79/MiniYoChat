@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
 
 import { ILoginUserParams } from './useAuth.types';
+import { auth } from '../../firebase';
 
 export const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);

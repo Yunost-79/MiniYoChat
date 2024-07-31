@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../lib/firebase/firebase';
+import { useAuth } from '../../zustand/useAuth';
+import { AuthContext } from '../../context/AuthContext';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
@@ -8,10 +10,12 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { MAIN_PRIMARY_YELLOW_COLOR, WHITE_COLOR } from '../../variables/variables';
 
 import UserAvatar from '/testUserAvatar.png';
-import { useAuth } from '../../zustand/useAuth';
 
 const UserInfo = () => {
   const [openSetting, setOpenSetting] = useState<boolean>(false);
+
+  const { currentUser } = useContext(AuthContext);
+  console.log(currentUser);
 
   const { setIsAuth } = useAuth();
 
@@ -26,9 +30,13 @@ const UserInfo = () => {
   return (
     <div className="user_info">
       <div className="user">
-        {UserAvatar ? <img className="user_icon" src={UserAvatar} /> : <AccountCircleIcon className="user_icon" style={{ color: WHITE_COLOR }} />}
+        {currentUser ? (
+          <img className="user_icon" src={currentUser?.photoURL || UserAvatar} />
+        ) : (
+          <AccountCircleIcon className="user_icon" style={{ color: WHITE_COLOR }} />
+        )}
 
-        <h2 className="user_title">Mr Dude</h2>
+        <h2 className="user_title">{currentUser?.displayName}</h2>
       </div>
       <div className="user_settings" onMouseEnter={toggleOpenSetting} onMouseLeave={toggleOpenSetting} onClick={handleSignOut}>
         <ExitToAppIcon style={{ color: openSetting ? MAIN_PRIMARY_YELLOW_COLOR : WHITE_COLOR }} />

@@ -2,19 +2,20 @@ import { useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { useRegistration } from '../../lib/firebase/hooks/useRegistration';
-import { ICreateUserParams } from '../../lib/firebase/hooks/useAuth.types';
-
 import { AuthTextField } from '../../components/MuiUI/TextFields.styled/AuthTextField.styled';
 import { AuthButton } from '../../components/MuiUI/Button.styled/AuthButton.styled';
 import AuthLoading from '../../components/UI/AuthLoading/AuthLoading';
 
+import { ICreateUserParams } from '../../lib/firebase/hooks/useAuth/useAuth.types';
+import { useRegistration } from '../../lib/firebase/hooks/useAuth/useRegistration';
+
 import { InputAdornment, Link } from '@mui/material';
+
+import { ERROR_COLOR, MAIN_PRIMAL_SAGE_COLOR } from '../../variables/variables';
+
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
-import { ERROR_COLOR, MAIN_PRIMAL_SAGE_COLOR } from '../../variables/variables';
 
 const RegistrationPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);

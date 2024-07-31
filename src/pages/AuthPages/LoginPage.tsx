@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { useLogin } from '../../lib/firebase/hooks/useLogin';
+import { useLogin } from '../../lib/firebase/hooks/useAuth/useLogin';
 
 import AuthLoading from '../../components/UI/AuthLoading/AuthLoading';
 

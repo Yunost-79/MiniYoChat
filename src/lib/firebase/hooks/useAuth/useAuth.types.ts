@@ -12,7 +12,7 @@ export interface ILoginUserParams {
   password: string;
   path?: string;
 }
-export enum EAuthFirebase {
+export enum EFirebase {
   users = 'users',
   userChats = 'userChats',
 }

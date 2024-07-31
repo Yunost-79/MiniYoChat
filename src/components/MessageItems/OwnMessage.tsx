@@ -20,8 +20,8 @@ const OwnMessage = (props: IOwnMessage) => {
     <div
       className="message_item own"
       id="2"
-      onMouseEnter={() => handleMouseEnter(EisHover.Message, '2')}
-      onMouseLeave={() => handleMouseLeave(EisHover.Message)}
+      onMouseEnter={() => handleMouseEnter(EisHover.message, '2')}
+      onMouseLeave={() => handleMouseLeave(EisHover.message)}
     >
       <div className="Message_images own" onClick={() => (!handleFullscreen.active ? handleFullscreen.enter() : undefined)}>
         <FullScreen handle={handleFullscreen}>

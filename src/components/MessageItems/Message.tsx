@@ -25,8 +25,8 @@ const Message = (props: IMessages) => {
     <div
       className="message_item"
       id="1"
-      onMouseEnter={() => handleMouseEnter(EisHover.Message, '1')}
-      onMouseLeave={() => handleMouseLeave(EisHover.Message)}
+      onMouseEnter={() => handleMouseEnter(EisHover.message, '1')}
+      onMouseLeave={() => handleMouseLeave(EisHover.message)}
     >
       <div className="sender_Message_info">
         {UserSenderAvatar ? (

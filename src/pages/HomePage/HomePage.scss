@@ -42,6 +42,7 @@
             width: 46px;
             height: 46px;
             border-radius: 50%;
+            object-fit: cover;
           }
           .user_title {
             font-size: 20px;
@@ -88,65 +89,92 @@
         }
 
         .search {
-          padding-right: 10px;
-          .input {
+          margin-top: 20px;
+
+          .search_input {
             width: 100%;
+            .search_icon {
+              cursor: pointer;
+            }
           }
         }
 
-        .chat_list {
+        .search_item {
           display: flex;
-          flex-direction: column;
-          overflow: scroll;
+          align-items: center;
+          gap: 15px;
+          padding: 10px;
+          border-bottom: 1px solid $MAIN_SECONDARY_YELLOW_COLOR;
+          cursor: pointer;
 
-          .list_item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 5px;
-            transition: ease-out 0.3s;
-            cursor: pointer;
+          transition: ease-out 0.3s;
 
-            .user_icon {
-              width: 46px;
-              height: 46px;
-              border-radius: 50%;
-            }
-
-            &:hover {
-              background-color: $MAIN_SECONDARY_YELLOW_COLOR;
-              color: $MAIN_PRIMAL_SAGE_COLOR;
-
-              .message_user_info {
-                .last_message {
-                  color: $MAIN_SECONDARY_SAGE_COLOR;
-                  transition: ease-out 0.3s;
-                }
-              }
-            }
-
-            .message_user_icon {
-              width: 36px;
-              height: 36px;
-            }
-
-            .message_user_info {
-              display: flex;
-              flex-direction: column;
-
-              .username {
-                font-size: 16px;
-                font-weight: 500;
-              }
-
-              .last_message {
-                font-size: 14px;
-                color: $MAIN_SECONDARY_GREY_COLOR;
-              }
-            }
+          &:hover {
+            background-color: $MAIN_SECONDARY_YELLOW_COLOR;
+            color: $BLACK_COLOR;
+            border-bottom: none;
+          }
+          .user_icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
           }
         }
       }
+
+      //   .chat_list {
+      //     display: flex;
+      //     flex-direction: column;
+      //     overflow: scroll;
+
+      //     .list_item {
+      //       display: flex;
+      //       align-items: center;
+      //       gap: 10px;
+      //       padding: 10px 5px;
+      //       transition: ease-out 0.3s;
+      //       cursor: pointer;
+
+      //       .user_icon {
+      //         width: 46px;
+      //         height: 46px;
+      //         border-radius: 50%;
+      //       }
+
+      //       &:hover {
+      //         background-color: $MAIN_SECONDARY_YELLOW_COLOR;
+      //         color: $MAIN_PRIMAL_SAGE_COLOR;
+
+      //         .message_user_info {
+      //           .last_message {
+      //             color: $MAIN_SECONDARY_SAGE_COLOR;
+      //             transition: ease-out 0.3s;
+      //           }
+      //         }
+      //       }
+
+      //       .message_user_icon {
+      //         width: 36px;
+      //         height: 36px;
+      //       }
+
+      //       .message_user_info {
+      //         display: flex;
+      //         flex-direction: column;
+
+      //         .username {
+      //           font-size: 16px;
+      //           font-weight: 500;
+      //         }
+
+      //         .last_message {
+      //           font-size: 14px;
+      //           color: $MAIN_SECONDARY_GREY_COLOR;
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
 
       .message_info {
         flex: 1 1 70%;
