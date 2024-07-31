@@ -58,6 +58,24 @@
         &:hover {
           border: dotted 3px rgba(73, 94, 87, 1);
         }
+
+        .file_preview {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          width: 100%;
+
+          .file_image {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+          }
+          .file_name {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
       }
     }
 

@@ -22,7 +22,7 @@ interface IMessageSender {
 }
 
 const MessageSender = (props: IMessageSender) => {
-  const { messageValue, setMessageValue, isHover, handleMouseEnter, handleMouseLeave } = props;
+  const { isHover, messageValue, setMessageValue, handleMouseEnter, handleMouseLeave } = props;
 
   const [openEmoji, setOpenEmoji] = useState<boolean>(false);
 
