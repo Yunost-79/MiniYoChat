@@ -15,13 +15,11 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { ERROR_COLOR, MAIN_PRIMAL_SAGE_COLOR } from '../../variables/variables';
 
 import './AuthPage.scss';
-import { useAuth } from '../../zustand/useAuth';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const { loginUserOnFirestore, loading, error } = useLogin();
-  const { setIsAuth } = useAuth();
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email format').required('Email is required'),
@@ -43,7 +41,6 @@ const LoginPage = () => {
       };
 
       loginUserOnFirestore(userInfo);
-      setIsAuth(true);
     },
   });
 

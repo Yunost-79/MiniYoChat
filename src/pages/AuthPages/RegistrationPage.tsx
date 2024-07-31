@@ -2,8 +2,6 @@ import { useRef, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { useAuth } from '../../zustand/useAuth';
-
 import { useRegistration } from '../../lib/firebase/hooks/useRegistration';
 import { ICreateUserParams } from '../../lib/firebase/hooks/useAuth.types';
 
@@ -26,7 +24,6 @@ const RegistrationPage = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const { createUserOnFirestore, loading, error } = useRegistration();
-  const { setIsAuth } = useAuth();
 
   const validationSchema = Yup.object({
     username: Yup.string().required('Username is required'),
@@ -52,7 +49,6 @@ const RegistrationPage = () => {
       };
 
       createUserOnFirestore(userInfo);
-      setIsAuth(true);
     },
   });
 

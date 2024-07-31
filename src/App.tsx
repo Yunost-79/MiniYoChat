@@ -1,28 +1,29 @@
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-
-import { useAuth } from './zustand/useAuth';
+import { AuthContext } from './context/AuthContext';
 
 import HomePage from './pages/HomePage/HomePage';
 import LoginPage from './pages/AuthPages/LoginPage';
 import RegistrationPage from './pages/AuthPages/RegistrationPage';
 
 import './main.scss';
+import { useAuth } from './zustand/useAuth';
 
 interface IPrivateRouteProps {
   children: ReactNode;
 }
 
-const App = () => {
+const PrivateRoute: React.FC<IPrivateRouteProps> = ({ children }) => {
+  const { currentUser } = useContext(AuthContext);
   const { isAuth } = useAuth();
 
-  const PrivateRoute: React.FC<IPrivateRouteProps> = ({ children }) => {
-    if (!isAuth) {
-      return <Navigate to="/login" />;
-    }
-    return children;
-  };
+  if (!currentUser && !isAuth) {
+    return <Navigate to="/login" />;
+  }
+  return <>{children}</>;
+};
 
+const App = () => {
   return (
     <div className="App">
       <Routes>
