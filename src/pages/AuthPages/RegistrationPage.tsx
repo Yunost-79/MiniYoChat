@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 import { useRegistration } from '../../lib/firebase/hooks/useRegistration';
-import { ICreateUserParams } from '../../lib/firebase/hooks/useRegistration.types';
+import { ICreateUserParams } from '../../lib/firebase/hooks/useAuth.types';
 
 import { AuthTextField } from '../../components/MuiUI/TextFields.styled/AuthTextField.styled';
 import { AuthButton } from '../../components/MuiUI/Button.styled/AuthButton.styled';
@@ -45,9 +45,10 @@ const RegistrationPage = () => {
         password: values.password,
         file: selectedFile,
         date: new Date().getTime(),
+        path: '/',
       };
 
-      createUserOnFirestore(userInfo, '/');
+      createUserOnFirestore(userInfo);
     },
   });
 
