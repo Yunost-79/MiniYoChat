@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { AuthTextField } from '../../components/MuiUI/TextFields.styled/AuthTextField.styled';
 import { AuthButton } from '../../components/MuiUI/Button.styled/AuthButton.styled';
@@ -10,20 +9,18 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 import { ERROR_COLOR, MAIN_PRIMAL_SAGE_COLOR } from '../../variables/variables';
-import { EAuthFirebase, ERegistrationPage } from './authPage.types';
-import { createUserOnFireStore } from '../../lib/helpers/registrationHelpers';
-import { ICreateUserOptions, ICreateUserParams } from '../../lib/helpers/registrationHelpers.types';
+import { ERegistrationPage } from './authPage.types';
+import { ICreateUserParams } from '../../lib/firebase/hooks/useRegistration.types';
+import { useRegistration } from '../../lib/firebase/hooks/useRegistration';
 
 const RegistrationPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const navigate = useNavigate();
+  const { createUserOnFirestore, loading, error } = useRegistration();
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -59,29 +56,15 @@ const RegistrationPage = () => {
     };
 
     if (formData.username !== '' && formData.email !== '' && formData.password !== '') {
-      try {
-        const userInfo: ICreateUserParams = {
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-          file: selectedFile,
-          date: formData.date,
-          usersPath: EAuthFirebase.users,
-          userChatsPath: EAuthFirebase.userChats,
-        };
+      const userInfo: ICreateUserParams = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        file: selectedFile,
+        date: formData.date,
+      };
 
-        const options: ICreateUserOptions = {
-          navigate: navigate,
-          path: '/',
-          setError: setError,
-          setLoading: setLoading,
-        };
-
-        createUserOnFireStore(userInfo, options);
-      } catch (err) {
-        setError(true);
-        setLoading(false);
-      }
+      createUserOnFirestore(userInfo, '/');
     }
   };
 
