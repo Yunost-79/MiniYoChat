@@ -15,7 +15,6 @@ const UserInfo = () => {
   const [openSetting, setOpenSetting] = useState<boolean>(false);
 
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
 
   const { setIsAuth } = useAuth();
 

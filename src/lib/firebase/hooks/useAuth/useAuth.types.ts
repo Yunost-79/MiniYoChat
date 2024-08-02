@@ -15,4 +15,5 @@ export interface ILoginUserParams {
 export enum EFirebase {
   users = 'users',
   userChats = 'userChats',
+  chats = 'chats',
 }

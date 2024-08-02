@@ -30,6 +30,7 @@ const RegistrationPage = () => {
     username: Yup.string().required('Username is required'),
     email: Yup.string().email('Invalid email format').required('Email is required'),
     password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+    file: Yup.mixed().required('File is required'),
   });
 
   const formik = useFormik({
@@ -37,6 +38,7 @@ const RegistrationPage = () => {
       username: '',
       email: '',
       password: '',
+      file: null,
     },
     validationSchema,
     onSubmit: (values) => {
@@ -54,25 +56,24 @@ const RegistrationPage = () => {
   });
 
   const handleShowPassword = () => {
-    setShowPassword(!showPassword);
+    setShowPassword((prev) => !prev);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      if (imagePreview !== null) {
-        setSelectedFile(file);
-      }
+      setSelectedFile(file);
+      formik.setFieldValue('file', file);
+
       const fileURL = URL.createObjectURL(file);
       setImagePreview(fileURL);
     }
   };
 
   const handleIconClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
+    fileInputRef.current?.click();
   };
+
   return (
     <div className="auth_page">
       <div className="wrapper">
@@ -86,7 +87,7 @@ const RegistrationPage = () => {
             </div>
             <form className="auth_form" onSubmit={formik.handleSubmit}>
               <AuthTextField
-                className="from_input input_email"
+                className="from_input input_username"
                 name="username"
                 type="text"
                 label="Username"
@@ -100,7 +101,7 @@ const RegistrationPage = () => {
               <AuthTextField
                 className="from_input input_email"
                 name="email"
-                type="text"
+                type="email"
                 label="E-mail"
                 variant="standard"
                 value={formik.values.email}
@@ -132,7 +133,15 @@ const RegistrationPage = () => {
                   ),
                 }}
               />
-              <input id="file" type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
+              <input
+                id="file"
+                type="file"
+                name="file"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={handleFileChange}
+                onBlur={formik.handleBlur}
+              />
               <div className="from_file_input" onClick={handleIconClick}>
                 {selectedFile ? (
                   <div className="file_preview">
@@ -145,6 +154,7 @@ const RegistrationPage = () => {
                     <span className="add_file_text">Add avatar</span>
                   </>
                 )}
+                {formik.touched.file && formik.errors.file ? <span className="file_error">{formik.errors.file}</span> : null}
               </div>
               <AuthButton className="form_button" type="submit">
                 Sign up

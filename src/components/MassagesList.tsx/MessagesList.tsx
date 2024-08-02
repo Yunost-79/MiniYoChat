@@ -26,18 +26,14 @@ const MessagesList = (props: IMessagesList) => {
     [EisHover.close]: false,
   });
 
-  const handleMouseEnter = () => {
-    (icon: EisHover, MessageId: string | null = null) => {
-      setIsHover((prev) => ({ ...prev, [icon]: true }));
-      setHoverMessageId(MessageId);
-    };
+  const handleMouseEnter = (icon: EisHover, messageId: string | null = null) => {
+    setIsHover((prev) => ({ ...prev, [icon]: true }));
+    setHoverMessageId(messageId);
   };
 
-  const handleMouseLeave = () => {
-    (icon: EisHover) => {
-      setIsHover((prev) => ({ ...prev, [icon]: false }));
-      setHoverMessageId(null);
-    };
+  const handleMouseLeave = (icon: EisHover) => {
+    setIsHover((prev) => ({ ...prev, [icon]: false }));
+    setHoverMessageId(null);
   };
 
   useEffect(() => {

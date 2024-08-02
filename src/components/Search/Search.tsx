@@ -1,11 +1,11 @@
 import { SetStateAction, useContext, useState } from 'react';
 
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, query, serverTimestamp, setDoc, updateDoc, where } from 'firebase/firestore';
 import { db } from '../../lib/firebase/firebase';
 import { User } from 'firebase/auth';
 import { AuthContext } from '../../context/AuthContext';
 
-import SearchItem from '../ChatListItem/ChatListItem';
+import SearchItem from '../SearchItem/SearchItem';
 
 import { InputAdornment } from '@mui/material';
 import { SearchTextField } from '../MuiUI/TextFields.styled/SearchTextField.styled';
@@ -25,6 +25,7 @@ const Search = () => {
 
   const handleChangeSearch = (e: { target: { value: SetStateAction<string> } }) => {
     setUsername(e.target.value);
+    if (error) setError(false);
   };
 
   const handleKeyDown = (e: { code: string }) => {
@@ -54,8 +55,43 @@ const Search = () => {
       setError(true);
     }
   };
-  console.log('error', error);
 
+  const handleSelect = async () => {
+    if (currentUser && user) {
+      const combinedId = currentUser.uid > user.uid ? currentUser.uid + user.uid : user.uid + currentUser.uid;
+
+      console.log(combinedId);
+      try {
+        const res = await getDoc(doc(db, EFirebase.chats, combinedId));
+
+        if (!res.exists()) {
+          await setDoc(doc(db, EFirebase.chats, combinedId), { messages: [] });
+
+          await updateDoc(doc(db, EFirebase.userChats, currentUser.uid), {
+            [combinedId + '.userInfo']: {
+              uid: user.uid,
+              displayName: user.displayName,
+              photoURL: user.photoURL,
+            },
+            [combinedId + '.date']: serverTimestamp(),
+          });
+
+          await updateDoc(doc(db, EFirebase.userChats, user.uid), {
+            [combinedId + '.userInfo']: {
+              uid: currentUser.uid,
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
+            },
+            [combinedId + '.date']: serverTimestamp(),
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+      setUser(null);
+      setUsername('');
+    }
+  };
 
   return (
     <>
@@ -63,11 +99,14 @@ const Search = () => {
         <SearchTextField
           className="input search_input"
           type="text"
-          label="Search user..."
+          label="Search"
           variant="standard"
           value={username}
+          // error={error}
+          helperText={error && 'User not found!'}
           onChange={handleChangeSearch}
           onKeyDown={handleKeyDown}
+          autoComplete="off"
           InputProps={{
             endAdornment: (
               <InputAdornment position="start" className="auth_show">
@@ -79,8 +118,7 @@ const Search = () => {
           }}
         />
       </div>
-      {user && <SearchItem photoURL={user?.photoURL} displayName={user?.displayName} />}
-      {error && <span className="user_not_found">User not found!</span>}
+      {user && <SearchItem photoURL={user.photoURL} displayName={user.displayName} handleSelect={handleSelect} />}
     </>
   );
 };

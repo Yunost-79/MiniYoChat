@@ -6,13 +6,16 @@ import { AuthContextProvider } from './context/AuthContext.tsx';
 import App from './App.tsx';
 
 import './main.scss';
+import { ChatContextProvider } from './context/ChatContext.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <AuthContextProvider>
-    <BrowserRouter>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </BrowserRouter>
+    <ChatContextProvider>
+      <BrowserRouter>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </BrowserRouter>
+    </ChatContextProvider>
   </AuthContextProvider>
 );

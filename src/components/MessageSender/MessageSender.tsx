@@ -17,7 +17,7 @@ interface IMessageSender {
   messageValue: string;
   setMessageValue: Dispatch<SetStateAction<string>>;
   isHover: { file: boolean; emoji: boolean; sendBtn: boolean; message: boolean; close: boolean };
-  handleMouseEnter: (icon: EisHover, MessageId?: string | null) => void;
+  handleMouseEnter: (icon: EisHover, messageId?: string | null) => void;
   handleMouseLeave: (icon: EisHover) => void;
 }
 
@@ -33,6 +33,7 @@ const MessageSender = (props: IMessageSender) => {
   const handleSetEmoji = (e: { emoji: string }) => {
     setMessageValue((messageValue) => messageValue + e.emoji);
   };
+
   return (
     <div className="message_sender">
       <MessageTextField
@@ -40,8 +41,6 @@ const MessageSender = (props: IMessageSender) => {
         type="text"
         variant="filled"
         margin="none"
-        // multiline
-        // maxRows={2}
         value={messageValue}
         onChange={(e) => setMessageValue(e.target.value)}
         label="Write a message..."

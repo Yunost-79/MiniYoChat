@@ -54,7 +54,7 @@ const Message = (props: IMessages) => {
         Lorem ipsum dolor sit Lorem ipsum dolor sit amet, consectetur adipisicing elit. A culpa temporibus necessitatibus voluptatem tempora et facere
         nobis ab odit quidem unde omnis reprehenderit optio assumenda, eaque laboriosam minima volu
       </div>
-      <div className={`message_timestamp ${isHover.Message && testArr2[0] === hoverMessageId ? 'isHover' : ''}`}>11:24</div>
+      <div className={`message_timestamp ${isHover.message && testArr2[0] === hoverMessageId ? 'isHover' : ''}`}>11:24</div>
     </div>
   );
 };
