@@ -4,15 +4,17 @@ import { AuthContext } from '../../context/AuthContext';
 import ChatListItem from '../ChatListItem/ChatListItem';
 import Search from '../Search/Search';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { EFirebase } from '../../lib/firebase/hooks/useAuth/useAuth.types';
 import { db } from '../../lib/firebase/firebase';
-import { ChatContext } from '../../context/ChatContext';
+import { useChatStore } from '../../lib/zustand/useChatStore';
+import { EFirebase } from '../../lib/hooks/useAuth/useAuth.types';
 
 export interface IUserInfo {
   uid: string;
   displayName: string;
   photoURL: string;
-  lastMessage: string;
+  lastMessage: {
+    text: string;
+  };
 }
 
 interface IChat {
@@ -20,14 +22,21 @@ interface IChat {
     nanoseconds: number;
     seconds: number;
   };
-  userInfo?: IUserInfo;
+  userInfo: IUserInfo;
 }
 
 const ChatList = () => {
   const [chats, setChats] = useState<IChat[]>([]);
 
+  const { setUserInfoState } = useChatStore();
+
   const { currentUser } = useContext(AuthContext);
-  const chatContext = useContext(ChatContext);
+
+  const handleSelect = (userInfo: IUserInfo) => {
+    if (userInfo) {
+      setUserInfoState(currentUser, userInfo);
+    }
+  };
 
   useEffect(() => {
     if (!currentUser) {
@@ -42,10 +51,12 @@ const ChatList = () => {
         }
 
         const chatsArray: IChat[] = Object.values(data).map((chat) => ({
-          ...chat,
+          date: chat.date,
           userInfo: {
-            ...chat.userInfo,
             uid: chat.userInfo.uid,
+            displayName: chat.userInfo.displayName,
+            photoURL: chat.userInfo.photoURL,
+            lastMessage: chat.lastMessage?.text,
           },
         })) as IChat[];
 
@@ -67,26 +78,31 @@ const ChatList = () => {
     getChats();
   }, [currentUser?.uid, currentUser]);
 
-  const handleSelect = (userInfo: IUserInfo) => {
-    if (chatContext && chatContext.dispatch && userInfo) {
-      chatContext.dispatch({ type: 'CHANGE_USER', payload: userInfo });
-    }
-  };
+  useEffect(() => {
+    const defaultChat = () => {
+      if (chats.length > 0 && chats[0].userInfo) {
+        setUserInfoState(currentUser, chats[0].userInfo);
+      }
+    };
 
-  console.log(chats);
+    defaultChat();
+  }, [chats]);
+
   return (
     <div className="chats_info">
       <Search />
-      <div className="chat_list">
-        {chats.length < 0 && <span className="chat_list_title">Chats:</span>}
+      <div className="chat_list ">
+        {chats.length > 0 && <span className="chat_list_title">Chats:</span>}
         {chats.map(
           ({ userInfo }) =>
             userInfo && (
               <ChatListItem
-                key={userInfo?.uid}
-                displayName={userInfo?.displayName}
-                photoURL={userInfo?.photoURL}
-                handleSelect={() => handleSelect(userInfo)}
+                key={userInfo.uid}
+                displayName={userInfo.displayName}
+                photoURL={userInfo.photoURL}
+                lastMessage={userInfo.lastMessage.text}
+                uid={userInfo.uid}
+                handleSelect={() => handleSelect(userInfo!)}
               />
             )
         )}

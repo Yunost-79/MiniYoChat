@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../lib/firebase/firebase';
-import { useAuth } from '../../zustand/useAuth';
+import { useAuth } from '../../lib/zustand/useAuth';
 import { AuthContext } from '../../context/AuthContext';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';

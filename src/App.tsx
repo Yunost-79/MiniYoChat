@@ -7,7 +7,7 @@ import LoginPage from './pages/AuthPages/LoginPage';
 import RegistrationPage from './pages/AuthPages/RegistrationPage';
 
 import './main.scss';
-import { useAuth } from './zustand/useAuth';
+import { useAuth } from './lib/zustand/useAuth';
 
 interface IPrivateRouteProps {
   children: ReactNode;

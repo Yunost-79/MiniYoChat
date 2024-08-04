@@ -6,7 +6,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { doc, setDoc } from 'firebase/firestore';
 
 import { EFirebase, ICreateUserParams } from './useAuth.types';
-import { auth, db, storage } from '../../firebase';
+import { auth, db, storage } from '../../firebase/firebase';
 
 export const useRegistration = () => {
   const [loading, setLoading] = useState<boolean>(false);

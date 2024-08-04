@@ -6,8 +6,8 @@ import { AuthTextField } from '../../components/MuiUI/TextFields.styled/AuthText
 import { AuthButton } from '../../components/MuiUI/Button.styled/AuthButton.styled';
 import AuthLoading from '../../components/UI/AuthLoading/AuthLoading';
 
-import { ICreateUserParams } from '../../lib/firebase/hooks/useAuth/useAuth.types';
-import { useRegistration } from '../../lib/firebase/hooks/useAuth/useRegistration';
+import { useRegistration } from '../../lib/hooks/useAuth/useRegistration';
+import { ICreateUserParams } from '../../lib/hooks/useAuth/useAuth.types';
 
 import { InputAdornment, Link } from '@mui/material';
 

@@ -1,12 +1,11 @@
 import MassageUserInfo from '../../components/MessageUserInfo/MessageUserInfo';
-import MassagesList from '../../components/MassagesList.tsx/MessagesList';
+import MassagesList from '../../components/MassagesList/MessagesList';
 import UserInfo from '../../components/UserInfo/UserInfo';
 import ChatList from '../../components/ChatList/ChatList';
 
 import './HomePage.scss';
 
 const HomePage = () => {
-  const testArr2 = ['1', '2'];
 
   return (
     <div className="home_page">
@@ -17,7 +16,7 @@ const HomePage = () => {
         </div>
         <div className="container">
           <ChatList />
-          <MassagesList testArr2={testArr2} />
+          <MassagesList  />
         </div>
       </div>
     </div>

@@ -1,60 +1,72 @@
 import { FullScreen, useFullScreenHandle } from 'react-full-screen';
 
-import { EisHover } from '../../pages/HomePage/homePage.type';
-
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CloseIcon from '@mui/icons-material/Close';
 
-import UserSenderAvatar from '/testSenderUserAvatar.png';
-
 import { WHITE_COLOR } from '../../variables/variables';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
+import { useChatStore } from '../../lib/zustand/useChatStore';
 
-interface IMessages {
-  isHover: { [key in EisHover]: boolean };
-  hoverMessageId: string | null;
-  handleMouseEnter: (icon: EisHover, MessageId?: string | null) => void;
-  handleMouseLeave: (icon: EisHover) => void;
-  testArr2: string[];
+interface IMessage {
+  message: {
+    id: string;
+    senderId: string;
+    text?: string;
+    img?: string;
+    date: {
+      nanoseconds: number;
+      seconds: number;
+    };
+  };
 }
 
-const Message = (props: IMessages) => {
-  const { isHover, hoverMessageId, handleMouseEnter, handleMouseLeave, testArr2 } = props;
+const Message = (props: IMessage) => {
+  const { message } = props;
+
+  // const [isHoverMessage, setIsHoverMessage] = useState<boolean>(false);
+  const [isHoverClose, setIsHoverClose] = useState<boolean>(false);
+
+  const { userInfoState } = useChatStore();
+  const { currentUser } = useContext(AuthContext);
 
   const handleFullscreen = useFullScreenHandle();
+
+  const icon = message.senderId === currentUser?.uid ? currentUser?.photoURL : userInfoState?.user.photoURL;
+  const name = message.senderId === currentUser?.uid ? currentUser?.displayName : userInfoState.user.displayName;
+
+
+  if (!message) {
+    return null;
+  }
   return (
     <div
-      className="message_item"
-      id="1"
-      onMouseEnter={() => handleMouseEnter(EisHover.message, '1')}
-      onMouseLeave={() => handleMouseLeave(EisHover.message)}
+      className={`message_item ${message.senderId === currentUser?.uid && 'own'}`}
+      // onMouseEnter={() => setIsHoverMessage(true)}
+      // onMouseLeave={() => setIsHoverMessage(false)}
     >
-      <div className="sender_Message_info">
-        {UserSenderAvatar ? (
-          <img className="sender_icon" src={UserSenderAvatar} />
-        ) : (
-          <AccountCircleIcon className="sender_icon" style={{ color: WHITE_COLOR }} />
-        )}
-        <div className="sender_username">Mrs Dude</div>
+      <div className="sender_message_info">
+        {icon ? <img className="sender_icon" src={icon} /> : <AccountCircleIcon className="sender_icon" style={{ color: WHITE_COLOR }} />}
+        {name && <div className="sender_username">{name}</div>}
       </div>
-      <div className="Message_images" onClick={() => (!handleFullscreen.active ? handleFullscreen.enter() : undefined)}>
-        <FullScreen handle={handleFullscreen}>
-          {handleFullscreen.active && (
-            <CloseIcon
-              className={`close_button ${isHover.close ? 'isHover' : ''}`}
-              onClick={handleFullscreen.active && handleFullscreen.exit}
-              onMouseEnter={() => handleMouseEnter(EisHover.close)}
-              onMouseLeave={() => handleMouseLeave(EisHover.close)}
-            />
-          )}
-          <img src="https://i.pinimg.com/originals/7e/94/b4/7e94b4b6fe5c93cc09936888457710e8.jpg" alt="" />
-        </FullScreen>
-      </div>
+      {message.img && (
+        <div className="message_images" onClick={() => (!handleFullscreen.active ? handleFullscreen.enter() : undefined)}>
+          <FullScreen handle={handleFullscreen}>
+            {handleFullscreen.active && (
+              <CloseIcon
+                className={`close_button ${isHoverClose ? 'isHover' : ''}`}
+                onClick={handleFullscreen.active && handleFullscreen.exit}
+                onMouseEnter={() => setIsHoverClose(true)}
+                onMouseLeave={() => setIsHoverClose(false)}
+              />
+            )}
+            <img src={message.img} alt="" />
+          </FullScreen>
+        </div>
+      )}
 
-      <div className="message_text">
-        Lorem ipsum dolor sit Lorem ipsum dolor sit amet, consectetur adipisicing elit. A culpa temporibus necessitatibus voluptatem tempora et facere
-        nobis ab odit quidem unde omnis reprehenderit optio assumenda, eaque laboriosam minima volu
-      </div>
-      <div className={`message_timestamp ${isHover.message && testArr2[0] === hoverMessageId ? 'isHover' : ''}`}>11:24</div>
+      {message && <div className="message_text">{message.text}</div>}
+      {/* <div className={`message_timestamp ${isHoverMessage ? 'isHover' : ''}`}>11:24</div> */}
     </div>
   );
 };

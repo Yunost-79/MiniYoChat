@@ -1,7 +1,7 @@
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { auth } from '../lib/firebase/firebase';
-import { useAuth } from '../zustand/useAuth';
+import { useAuth } from '../lib/zustand/useAuth';
 
 interface IProps {
   children?: ReactNode;

@@ -131,9 +131,13 @@
             align-items: center;
             gap: 10px;
             padding: 10px 5px;
-            transition: 0.3s linear;
+            transition: 0.1s linear;
             cursor: pointer;
             color: $WHITE_COLOR;
+            
+            &.active {
+              background-color: $MAIN_SECONDARY_YELLOW_COLOR;
+            }
 
             &:hover {
               background-color: $MAIN_SECONDARY_YELLOW_COLOR;
@@ -144,7 +148,7 @@
               width: 46px;
               height: 46px;
               border-radius: 50%;
-              transition: 0.3s linear;
+              transition: 0.1s linear;
             }
           }
         }
@@ -204,7 +208,7 @@
               border-width: 15px 15px 0 0;
               border-color: $MAIN_DARK_SAGE_COLOR transparent transparent transparent;
             }
-            .sender_Message_info {
+            .sender_message_info {
               display: flex;
               align-items: center;
               gap: 10px;
@@ -219,7 +223,7 @@
               }
             }
 
-            .Message_images {
+            .message_images {
               img {
                 width: 100%;
                 height: 500px;
@@ -277,11 +281,71 @@
         }
 
         .message_sender {
+          position: relative;
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 10px;
           padding-top: 10px;
+
+          .preview_image {
+            position: absolute;
+            bottom: 75px;
+            right: 100px;
+            padding: 5px;
+
+            border-radius: 10px;
+            background-color: $MAIN_PRIMARY_YELLOW_COLOR;
+            transition: linear 0.5s;
+
+            &:hover {
+              .close_icon {
+                opacity: 1;
+                z-index: 2;
+                transition: linear 0.3s;
+
+                &:hover {
+                  color: $WHITE_COLOR;
+                }
+              }
+
+              .upload_progress {
+                opacity: 1;
+              }
+              img {
+                filter: blur(2px) grayscale(25%);
+              }
+            }
+
+            &::after {
+              position: absolute;
+              content: '';
+              bottom: -15px;
+              right: 10px;
+
+              border-style: solid;
+              border-width: 15px 15px 0 0;
+              transform: rotate(90deg);
+              border-color: $MAIN_PRIMARY_YELLOW_COLOR transparent transparent transparent;
+            }
+
+            .close_icon {
+              position: absolute;
+              top: 5px;
+              right: 5px;
+              color: $MAIN_SECONDARY_GREY_COLOR;
+              opacity: 0;
+              cursor: pointer;
+            }
+
+            img {
+              width: 200px;
+              height: 200px;
+              border-radius: 10px;
+              object-fit: cover;
+              transition: linear 0.3s;
+            }
+          }
 
           .message_input {
             flex-grow: 1;

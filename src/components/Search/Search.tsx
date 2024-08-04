@@ -10,10 +10,9 @@ import SearchItem from '../SearchItem/SearchItem';
 import { InputAdornment } from '@mui/material';
 import { SearchTextField } from '../MuiUI/TextFields.styled/SearchTextField.styled';
 
-import { EFirebase } from '../../lib/firebase/hooks/useAuth/useAuth.types';
-
 import SearchIcon from '@mui/icons-material/Search';
 import { MAIN_PRIMARY_YELLOW_COLOR, WHITE_COLOR } from '../../variables/variables';
+import { EFirebase } from '../../lib/hooks/useAuth/useAuth.types';
 
 const Search = () => {
   const [username, setUsername] = useState<string>('');
@@ -60,7 +59,6 @@ const Search = () => {
     if (currentUser && user) {
       const combinedId = currentUser.uid > user.uid ? currentUser.uid + user.uid : user.uid + currentUser.uid;
 
-      console.log(combinedId);
       try {
         const res = await getDoc(doc(db, EFirebase.chats, combinedId));
 
