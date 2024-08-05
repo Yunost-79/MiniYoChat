@@ -41,7 +41,6 @@ const Search = (props: ISearch) => {
   };
 
   const handleSearch = async () => {
-
     if (username === currentUser?.displayName) {
       return;
     }
@@ -107,9 +106,9 @@ const Search = (props: ISearch) => {
           type="text"
           label="Search"
           variant="standard"
-          value={!isOpenMenu ? username : ''}
+          value={username}
           helperText={error && 'User not found!'}
-          disabled={isMobile && isOpenMenu}
+          disabled={isMobile && !isOpenMenu}
           onChange={handleChangeSearch}
           onKeyDown={handleKeyDown}
           autoComplete="off"
