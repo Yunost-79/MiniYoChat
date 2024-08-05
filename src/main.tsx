@@ -11,7 +11,7 @@ import { ChatContextProvider } from './context/ChatContext.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <AuthContextProvider>
     <ChatContextProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/miniYoChat/">
         <React.StrictMode>
           <App />
         </React.StrictMode>
