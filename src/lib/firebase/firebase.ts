@@ -1,21 +1,20 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_API_KEY,
-    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
-    projectId: import.meta.env.VITE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
-    appId: import.meta.env.VITE_ADD_ID,
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: 'miniyochat-2.firebaseapp.com',
+  projectId: 'miniyochat-2',
+  storageBucket: 'miniyochat-2.appspot.com',
+  messagingSenderId: '204537263377',
+  appId: '1:204537263377:web:5f60981ab5f0b947a148b0',
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth()
+const auth = getAuth();
 const storage = getStorage();
-const db = getFirestore()
+const db = getFirestore();
 
-
-export { app, auth, storage, db }
+export { app, auth, storage, db };
