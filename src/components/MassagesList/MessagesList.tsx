@@ -8,7 +8,11 @@ import { db } from '../../lib/firebase/firebase';
 import { EFirebase } from '../../lib/hooks/useAuth/useAuth.types';
 
 interface MessageType {
-  id?: string;
+  id: string;
+  senderId: string;
+  text?: string | undefined;
+  img?: string | undefined;
+  date: { nanoseconds: number; seconds: number };
 }
 
 const MessagesList = () => {
@@ -45,7 +49,6 @@ const MessagesList = () => {
         {messages.map((message) => (
           <Message key={message.id} message={message} />
         ))}
-        {/* <OwnMessage /> */}
       </div>
 
       <MessageSender messageValue={messageValue} setMessageValue={setMessageValue} />
