@@ -12,7 +12,6 @@ import { EFirebase } from '../../lib/hooks/useAuth/useAuth.types';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useAuth } from '../../lib/zustand/useAuth';
 import { signOut } from 'firebase/auth';
-import { MAIN_PRIMARY_YELLOW_COLOR, WHITE_COLOR } from '../../variables/variables';
 
 export interface IUserInfo {
   uid: string;
