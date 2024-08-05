@@ -23,9 +23,6 @@ const PrivateRoute: React.FC<IPrivateRouteProps> = ({ children }) => {
   return <>{children}</>;
 };
 
-console.log('VITE_TEST_KEY:', import.meta.env.VITE_TEST_KEY);
-console.log('working');
-
 const App = () => {
   return (
     <div className="App">

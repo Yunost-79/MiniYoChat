@@ -9,13 +9,14 @@ import AuthLoading from '../../components/UI/AuthLoading/AuthLoading';
 import { useRegistration } from '../../lib/hooks/useAuth/useRegistration';
 import { ICreateUserParams } from '../../lib/hooks/useAuth/useAuth.types';
 
-import { InputAdornment, Link } from '@mui/material';
+import { InputAdornment } from '@mui/material';
 
 import { ERROR_COLOR, MAIN_PRIMAL_SAGE_COLOR } from '../../variables/variables';
 
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Link } from 'react-router-dom';
 
 const RegistrationPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -164,7 +165,7 @@ const RegistrationPage = () => {
             <div className="auth_change">
               <span className="change_text">Do you have an account at Mini Yo Chat?</span>
               <div className="change_subtext">
-                <Link className="subtext_link" href="/login">
+                <Link className="subtext_link" to="/login">
                   Sign in
                 </Link>
               </div>

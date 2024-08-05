@@ -6,7 +6,7 @@ import { useLogin } from '../../lib/hooks/useAuth/useLogin';
 
 import AuthLoading from '../../components/UI/AuthLoading/AuthLoading';
 
-import { InputAdornment, Link } from '@mui/material';
+import { InputAdornment } from '@mui/material';
 import { AuthTextField } from '../../components/MuiUI/TextFields.styled/AuthTextField.styled';
 import { AuthButton } from '../../components/MuiUI/Button.styled/AuthButton.styled';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -15,6 +15,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { ERROR_COLOR, MAIN_PRIMAL_SAGE_COLOR } from '../../variables/variables';
 
 import './AuthPage.scss';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -103,7 +104,7 @@ const LoginPage = () => {
               <span className="change_text">First time at Mini Yo Chat?</span>
               <div className="change_subtext">
                 <span className="subtext_title">Create an account</span>
-                <Link className="subtext_link" href="/registration">
+                <Link className="subtext_link" to="/registration">
                   Sign up
                 </Link>
               </div>

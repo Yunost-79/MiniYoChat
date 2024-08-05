@@ -100,7 +100,7 @@ const ChatList = () => {
                 key={userInfo.uid}
                 displayName={userInfo.displayName}
                 photoURL={userInfo.photoURL}
-                lastMessage={userInfo.lastMessage.text}
+                lastMessage={userInfo.lastMessage?.text}
                 uid={userInfo.uid}
                 handleSelect={() => handleSelect(userInfo!)}
               />
