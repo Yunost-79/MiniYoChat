@@ -4,33 +4,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  max-height: 100vh;
+  width: 100%;
+  height: 100vh;
   color: $WHITE_COLOR;
 
   .wrapper {
     display: flex;
     flex-direction: column;
-    width: 80vw;
-    height: 90vh;
-    padding: 50px 0;
+    width: 100vw;
+    max-height: 100vh;
+    height: 100%;
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      height: 100vh;
+    }
 
     .header {
       display: flex;
 
       .user_info {
-        flex: 1 1 20%;
+        flex: 1 1 30%;
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
         background-color: $MAIN_DARK_SAGE_COLOR;
-        border-radius: 15px 0 0 0;
         padding: 20px;
         border-right: 3px solid $MAIN_SECONDARY_YELLOW_COLOR;
-
-        @media (max-width: 1440px) {
-          flex: 1 1 30%;
-        }
 
         .user {
           display: flex;
@@ -56,12 +58,20 @@
 
       .message_user_info {
         flex: 1 1 70%;
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: space-between;
         background-color: $MAIN_SECONDARY_SAGE_COLOR;
-        border-radius: 0 15px 0 0;
+        width: 100%;
         padding: 20px;
+
+        @media (max-width: 768px) {
+          justify-content: center;
+          padding: 15px;
+          margin-left: 85px;
+        }
+
         .message_user_title {
           font-size: 20px;
           font-weight: 600;
@@ -72,20 +82,53 @@
     .container {
       display: flex;
       background-color: $MAIN_PRIMAL_SAGE_COLOR;
-      border-radius: 0 0 15px 15px;
       height: 100%;
 
+      .hamburger {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        z-index: 11;
+
+        & .hamburger-inner {
+          background-color: $WHITE_COLOR;
+
+          &::after,
+          &::before {
+            background-color: $WHITE_COLOR;
+          }
+        }
+      }
+
       .chats_info {
-        flex: 1 1 20%;
+        width: 100%;
+        flex: 1 1 30%;
         padding: 0 0 20px 20px;
         border-right: 3px solid $MAIN_SECONDARY_YELLOW_COLOR;
 
         display: flex;
         flex-direction: column;
         gap: 20px;
+        transition: all 0.3s ease-in-out;
 
-        @media (max-width: 1440px) {
-          flex: 1 1 30%;
+        @media (max-width: 768px) {
+          position: fixed;
+          top: -10vh;
+          // left: -215px;
+          left: 0;
+          width: 90px;
+          padding: 10px;
+
+          z-index: 10;
+          background-color: $MAIN_PRIMAL_SAGE_COLOR;
+          height: 110vh;
+          padding-top: 15vh;
+          transition: all 0.3s ease-in-out;
+
+          &.mobile {
+            // left: 0;
+            width: 60%;
+          }
         }
 
         .search {
@@ -124,7 +167,8 @@
         .chat_list {
           display: flex;
           flex-direction: column;
-          overflow: auto;
+          overflow-x: hidden;
+          overflow-y: auto;
 
           .list_item {
             display: flex;
@@ -134,9 +178,19 @@
             transition: 0.1s linear;
             cursor: pointer;
             color: $WHITE_COLOR;
-            
+
+            @media (max-width: 768px) {
+              padding: 10px;
+            }
+
             &.active {
               background-color: $MAIN_SECONDARY_YELLOW_COLOR;
+              // transition-delay: 0.3s;
+            }
+
+            &.active.closed_modal {
+              border-radius: 50%;
+              transition-delay: 0.3s;
             }
 
             &:hover {
@@ -144,11 +198,25 @@
               color: $BLACK_COLOR;
             }
 
-            .user_icon {
-              width: 46px;
-              height: 46px;
-              border-radius: 50%;
-              transition: 0.1s linear;
+            .user_image {
+              // padding-left: 3px;
+              img {
+                width: 46px;
+                height: 46px;
+                border-radius: 50%;
+                transition: 0.1s linear;
+                object-fit: cover;
+              }
+            }
+
+            .list_item_info {
+              transition: all 0.1s ease-in-out;
+              opacity: 1;
+
+              &.invisible {
+                padding-left: 100px;
+                opacity: 0;
+              }
             }
           }
         }
@@ -156,21 +224,36 @@
 
       .message_info {
         flex: 1 1 70%;
+        position: relative;
+        height: 100%;
         padding: 0 20px 20px;
         background-color: $MAIN_LIGHT_SAGE_COLOR;
-        border-radius: 0 0 15px 0;
+
+        @media (max-width: 768px) {
+          margin-left: 85px;
+          overflow: hidden;
+          padding: 0 20px 0 20px;
+        }
 
         .message_list {
-          height: 90%;
+          height: 100%;
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 40px;
+          gap: 5px;
           overflow: scroll;
+          padding-bottom: 150px;
 
+          @media (max-width: 768px) {
+            padding-bottom: 150px;
+          }
           .message_item {
             position: relative;
             width: 70%;
+
+            @media (max-width: 768px) {
+              width: 100%;
+            }
 
             background-color: $MAIN_DARK_SAGE_COLOR;
             border-radius: 10px;
@@ -185,8 +268,10 @@
               align-self: flex-end;
 
               &::after {
+                content: '';
                 right: 10px;
                 transform: rotate(90deg);
+
                 border-color: $MAIN_SECONDARY_YELLOW_COLOR transparent transparent transparent;
               }
               .message_timestamp {
@@ -202,8 +287,8 @@
             &::after {
               position: absolute;
               content: '';
-              bottom: -15px;
 
+              bottom: -15px;
               border-style: solid;
               border-width: 15px 15px 0 0;
               border-color: $MAIN_DARK_SAGE_COLOR transparent transparent transparent;
@@ -224,6 +309,7 @@
             }
 
             .message_images {
+              padding-top: 5px;
               img {
                 width: 100%;
                 height: 500px;
@@ -281,12 +367,27 @@
         }
 
         .message_sender {
-          position: relative;
+          position: absolute;
+          width: 100%;
+
+          bottom: 0px;
+          left: 0;
+          padding: 15px 10px;
+
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 10px;
-          padding-top: 10px;
+
+          background-color: $MAIN_SECONDARY_SAGE_COLOR;
+
+          @media (max-width: 768px) {
+            width: 100%;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            padding: 10px;
+          }
 
           .preview_image {
             position: absolute;
@@ -399,6 +500,23 @@
             }
           }
         }
+      }
+    }
+
+    .dropdown_zone {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.5s linear, visibility 0.5s linear;
+
+      &.active {
+        visibility: visible;
+        transition-delay: 0.3s;
+        opacity: 1;
+        position: absolute;
+        background-color: $MAIN_DROPDOWN_YELLOW_COLOR;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9;
       }
     }
   }

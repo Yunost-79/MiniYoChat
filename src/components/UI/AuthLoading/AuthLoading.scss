@@ -6,7 +6,8 @@
 
   padding: 20px;
 
-
+  @media (max-width: 480px) {
+    height: 100%;
+    justify-content: center;
+  }
 }
-
-

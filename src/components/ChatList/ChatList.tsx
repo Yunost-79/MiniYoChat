@@ -12,9 +12,13 @@ export interface IUserInfo {
   uid: string;
   displayName: string;
   photoURL: string;
-  lastMessage: {
-    text: string;
-  };
+  lastMessage: string;
+}
+
+interface IChatList {
+  isMobile: boolean;
+  isOpenMenu: boolean;
+  toggleMenu: () => void;
 }
 
 interface IChat {
@@ -25,7 +29,9 @@ interface IChat {
   userInfo: IUserInfo;
 }
 
-const ChatList = () => {
+const ChatList = (props: IChatList) => {
+  const { isMobile, isOpenMenu, toggleMenu } = props;
+
   const [chats, setChats] = useState<IChat[]>([]);
 
   const { setUserInfoState } = useChatStore();
@@ -89,25 +95,43 @@ const ChatList = () => {
   }, [chats]);
 
   return (
-    <div className="chats_info">
-      <Search />
-      <div className="chat_list ">
-        {chats.length > 0 && <span className="chat_list_title">Chats:</span>}
-        {chats.map(
-          ({ userInfo }) =>
-            userInfo && (
-              <ChatListItem
-                key={userInfo.uid}
-                displayName={userInfo.displayName}
-                photoURL={userInfo.photoURL}
-                lastMessage={userInfo.lastMessage?.text}
-                uid={userInfo.uid}
-                handleSelect={() => handleSelect(userInfo!)}
-              />
-            )
-        )}
+    <>
+      {isMobile && (
+        <div
+          className={`hamburger hamburger--spin ${isOpenMenu ? 'is-active' : ''}`}
+          onClick={toggleMenu}
+          aria-label="Menu"
+          aria-controls="navigation"
+          tabIndex={0}
+        >
+          <div className="hamburger-box">
+            <div className="hamburger-inner"></div>
+          </div>
+        </div>
+      )}
+
+      <div className={`chats_info ${isMobile && isOpenMenu ? 'mobile' : ''}`}>
+        <Search isMobile={isMobile} isOpenMenu={isOpenMenu} />
+        <div className="chat_list ">
+          {chats.length > 0 && !isMobile && <span className="chat_list_title">Chats:</span>}
+          {chats.map(
+            (chat) =>
+              chat.userInfo && (
+                <ChatListItem
+                  key={chat.userInfo.uid}
+                  displayName={chat.userInfo.displayName}
+                  photoURL={chat.userInfo.photoURL}
+                  lastMessage={chat.userInfo.lastMessage}
+                  uid={chat.userInfo.uid}
+                  handleSelect={() => handleSelect(chat.userInfo!)}
+                  isMobile={isMobile}
+                  isOpenMenu={isOpenMenu}
+                />
+              )
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

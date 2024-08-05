@@ -14,7 +14,14 @@ import SearchIcon from '@mui/icons-material/Search';
 import { MAIN_PRIMARY_YELLOW_COLOR, WHITE_COLOR } from '../../variables/variables';
 import { EFirebase } from '../../lib/hooks/useAuth/useAuth.types';
 
-const Search = () => {
+interface ISearch {
+  isMobile: boolean;
+  isOpenMenu: boolean;
+}
+
+const Search = (props: ISearch) => {
+  const { isMobile, isOpenMenu } = props;
+
   const [username, setUsername] = useState<string>('');
   const [user, setUser] = useState<User | null>(null);
   const [error, setError] = useState<boolean>(false);
@@ -34,6 +41,7 @@ const Search = () => {
   };
 
   const handleSearch = async () => {
+
     if (username === currentUser?.displayName) {
       return;
     }
@@ -95,19 +103,19 @@ const Search = () => {
     <>
       <div className="search">
         <SearchTextField
-          className="input search_input"
+          className={`input search_input ${!isOpenMenu && isMobile ? 'invisible' : ''}`}
           type="text"
           label="Search"
           variant="standard"
-          value={username}
-          // error={error}
+          value={!isOpenMenu ? username : ''}
           helperText={error && 'User not found!'}
+          disabled={isMobile && isOpenMenu}
           onChange={handleChangeSearch}
           onKeyDown={handleKeyDown}
           autoComplete="off"
           InputProps={{
             endAdornment: (
-              <InputAdornment position="start" className="auth_show">
+              <InputAdornment position="start" className="search_icon">
                 <div className="search_icon" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} onClick={handleSearch}>
                   <SearchIcon style={{ color: isHover ? MAIN_PRIMARY_YELLOW_COLOR : WHITE_COLOR }} />
                 </div>

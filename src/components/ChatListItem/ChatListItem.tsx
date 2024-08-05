@@ -10,10 +10,12 @@ interface IChatListItem {
   lastMessage?: string;
   handleSelect?: () => void;
   uid?: string;
+  isMobile?: boolean;
+  isOpenMenu?: boolean;
 }
 
 const ChatListItem = (props: IChatListItem) => {
-  const { displayName, photoURL, lastMessage, uid, handleSelect } = props;
+  const { isMobile, isOpenMenu, displayName, photoURL, lastMessage, uid, handleSelect } = props;
 
   const [isHover, setIsHover] = useState(false);
 
@@ -21,17 +23,20 @@ const ChatListItem = (props: IChatListItem) => {
 
   return (
     <div
-      className={`list_item ${userInfoState.user.uid === uid && 'active'}`}
+      className={`list_item ${userInfoState.user.uid === uid && 'active'} ${!isOpenMenu && isMobile ? 'closed_modal' : ''}`}
       onClick={handleSelect}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
       {photoURL ? (
-        <img className="user_icon" src={photoURL} />
+        <div className="user_image">
+          <img src={photoURL} />
+        </div>
       ) : (
         <AccountCircleIcon className="user_icon" style={{ color: isHover ? BLACK_COLOR : WHITE_COLOR }} />
       )}
-      <div className="list_item_info">
+
+      <div className={`list_item_info ${!isOpenMenu && isMobile ? 'invisible' : ''}`}>
         <div className="username">{displayName}</div>
         {lastMessage && <div className="last_message">{lastMessage}</div>}
       </div>

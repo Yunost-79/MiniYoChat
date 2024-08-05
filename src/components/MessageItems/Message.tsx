@@ -35,13 +35,13 @@ const Message = (props: IMessage) => {
   const icon = message.senderId === currentUser?.uid ? currentUser?.photoURL : userInfoState?.user.photoURL;
   const name = message.senderId === currentUser?.uid ? currentUser?.displayName : userInfoState.user.displayName;
 
-
   if (!message) {
     return null;
   }
+
   return (
     <div
-      className={`message_item ${message.senderId === currentUser?.uid && 'own'}`}
+      className={`message_item ${message.senderId === currentUser?.uid ? 'own' : ''}`}
       // onMouseEnter={() => setIsHoverMessage(true)}
       // onMouseLeave={() => setIsHoverMessage(false)}
     >

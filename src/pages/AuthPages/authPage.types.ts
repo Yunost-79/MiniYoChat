@@ -1,7 +1,5 @@
-
-
 export enum ERegistrationPage {
-    username = 'username',
-    email = 'email',
-    password = 'password'
+  username = 'username',
+  email = 'email',
+  password = 'password',
 }

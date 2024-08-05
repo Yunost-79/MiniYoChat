@@ -17,6 +17,7 @@
     "emoji-picker-react": "^4.11.1",
     "firebase": "^10.12.4",
     "formik": "^2.4.6",
+    "hamburgers": "^1.2.1",
     "react": "^18.3.1",
     "react-click-away-listener": "^2.2.3",
     "react-dom": "^18.3.1",

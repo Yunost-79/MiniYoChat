@@ -21,7 +21,17 @@
     background-color: $MAIN_PRIMARY_YELLOW_COLOR;
 
     @media (max-width: 1440px) {
-      width: 35%;
+      width: 60%;
+    }
+
+    @media (max-width: 768px) {
+      width: 90%;
+    }
+
+    @media (max-width: 480px) {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
     }
 
     .auth_title {
@@ -44,6 +54,10 @@
       flex-direction: column;
       gap: 20px;
       width: 100%;
+
+      @media (max-width: 480px) {
+        margin-top: 30%;
+      }
 
       .from_file_input {
         display: flex;

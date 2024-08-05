@@ -44,9 +44,9 @@ const RegistrationPage = () => {
     validationSchema,
     onSubmit: (values) => {
       const userInfo: ICreateUserParams = {
-        username: values.username,
-        email: values.email,
-        password: values.password,
+        username: values.username.trim(),
+        email: values.email.trim(),
+        password: values.password.trim(),
         file: selectedFile,
         date: new Date().getTime(),
         path: '/',

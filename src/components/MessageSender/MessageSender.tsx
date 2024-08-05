@@ -164,6 +164,8 @@ const MessageSender = (props: IMessageSender) => {
         onKeyDown={handleKeyDown}
         autoComplete="off"
         label="Write a message..."
+        multiline
+        maxRows={3}
       />
       {previewImage && (
         <div className="preview_image">

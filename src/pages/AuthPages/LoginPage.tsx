@@ -36,8 +36,8 @@ const LoginPage = () => {
     validationSchema,
     onSubmit: (values) => {
       const userInfo = {
-        email: values.email,
-        password: values.password,
+        email: values.email.trim(),
+        password: values.password.trim(),
         path: '/',
       };
 
@@ -48,6 +48,7 @@ const LoginPage = () => {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   return (
     <div className="auth_page">
       <div className="wrapper">

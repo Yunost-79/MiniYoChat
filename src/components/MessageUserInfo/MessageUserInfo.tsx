@@ -1,4 +1,4 @@
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useChatStore } from '../../lib/zustand/useChatStore';
 
 const MassageUserInfo = () => {
@@ -7,9 +7,7 @@ const MassageUserInfo = () => {
   return (
     <div className="message_user_info">
       <span className="message_user_title">{userInfoState.user.displayName}</span>
-      <div className="message_user_settings">
-        <MoreVertIcon />
-      </div>
+      <div className="message_user_settings">{/* <MoreVertIcon /> */}</div>
     </div>
   );
 };
