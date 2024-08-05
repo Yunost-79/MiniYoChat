@@ -3,10 +3,16 @@ import { AuthContext } from '../../context/AuthContext';
 
 import ChatListItem from '../ChatListItem/ChatListItem';
 import Search from '../Search/Search';
+
 import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../../lib/firebase/firebase';
+import { auth, db } from '../../lib/firebase/firebase';
 import { useChatStore } from '../../lib/zustand/useChatStore';
 import { EFirebase } from '../../lib/hooks/useAuth/useAuth.types';
+
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { useAuth } from '../../lib/zustand/useAuth';
+import { signOut } from 'firebase/auth';
+import { MAIN_PRIMARY_YELLOW_COLOR, WHITE_COLOR } from '../../variables/variables';
 
 export interface IUserInfo {
   uid: string;
@@ -34,6 +40,7 @@ const ChatList = (props: IChatList) => {
 
   const [chats, setChats] = useState<IChat[]>([]);
 
+  const { setIsAuth } = useAuth();
   const { setUserInfoState } = useChatStore();
 
   const { currentUser } = useContext(AuthContext);
@@ -42,6 +49,10 @@ const ChatList = (props: IChatList) => {
     if (userInfo) {
       setUserInfoState(currentUser, userInfo);
     }
+  };
+  const handleSignOut = () => {
+    setIsAuth(false);
+    signOut(auth);
   };
 
   useEffect(() => {
@@ -130,6 +141,12 @@ const ChatList = (props: IChatList) => {
               )
           )}
         </div>
+        {isMobile && isOpenMenu && (
+          <div className="sign_out" onClick={handleSignOut}>
+            <span>Logout</span>
+            <ExitToAppIcon />
+          </div>
+        )}
       </div>
     </>
   );

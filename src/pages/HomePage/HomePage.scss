@@ -220,6 +220,27 @@
             }
           }
         }
+
+        .sign_out {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          transition: color 0.3s ease-in-out;
+          cursor: pointer;
+
+          span,
+          .MuiSvgIcon-root {
+            transition: color 0.3s ease-in-out;
+          }
+
+          &:hover {
+            span,
+            .MuiSvgIcon-root {
+              color: $MAIN_PRIMARY_YELLOW_COLOR;
+            }
+          }
+        }
       }
 
       .message_info {
